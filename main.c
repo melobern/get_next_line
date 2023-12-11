@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 13:41:27 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/11 14:12:15 by mbernard         ###   ########.fr       */
+/*   Created: 2023/12/11 13:22:35 by mbernard          #+#    #+#             */
+/*   Updated: 2023/12/11 17:32:29 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 
-# include <stdlib.h>
-# include <unistd.h>
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 8
-# endif
-
-char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2, int size);
-size_t	ft_strlen(const char *s);
-
-#endif
-
+int	main(int ac, char **av)
+{
+	if (ac > 1)
+	{
+		int fd = open(av[1], O_RDONLY);
+	
+		printf("\n%s", get_next_line(fd));
+	}
+	return (0);
+}
