@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/11 20:54:57 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:20:42 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_next_line(int fd)
 	int			x;
 	int			rest;
 
-	if (BUFFER_SIZE <= 0 || fd <= 0 || read(fd, buf, 0) == 0)
+	if (BUFFER_SIZE <= 0 || fd <= 0 || read(fd, buf, 0) < 0)
 		return (NULL);
 	x = 0;
 	if (stash)
@@ -59,12 +59,17 @@ char	*get_next_line(int fd)
 	while (!ft_contains_end_line(buf))
 	{
 		line = ft_strjoin((const char *)line, (const char *)buf, BUFFER_SIZE);
+		write(1, buf, ft_strlen(buf));
+		write(1, "\n", 1);
+		/*
+		 * There's a stupid 1 coming here at the 4st iteration,
+		 * searching where it comes from U_O
+			* */
 		read(fd, buf, BUFFER_SIZE);
 		x++;
 	}
 	rest = ft_count_chars(buf);
 	line = ft_strjoin(line, buf, rest);
 	stash = ft_strjoin(stash, buf + rest, BUFFER_SIZE - rest);
-	//write(1, stash, ft_strlen(stash));
 	return (line);
 }
