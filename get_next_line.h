@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:41:27 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/11 14:12:15 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:26:06 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,3 @@ char	*ft_strjoin(char const *s1, char const *s2, int size);
 size_t	ft_strlen(const char *s);
 
 #endif
-
