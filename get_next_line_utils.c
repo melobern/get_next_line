@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/12 15:32:10 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:58:23 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t size)
 	size_t	total_len;
 	char	*dest;
 	int		x;
-	size_t		y;
+	size_t	y;
 
 	if (!s2)
 		return (NULL);
@@ -58,15 +58,12 @@ char	*ft_strjoin(char *s1, char *s2, size_t size)
 		return (NULL);
 	x = 0;
 	y = 0;
-	if (s1)
+	while (s1 && s1[x])
 	{
-		while (s1[x])
-		{
-			dest[x] = (char)s1[x];
-			x++;
-		}
-		free(s1);
+		dest[x] = (char)s1[x];
+		x++;
 	}
+	free(s1);
 	while (s2[y] && y < size)
 		dest[x++] = (char)s2[y++];
 	dest[x] = '\0';
