@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:22:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/13 18:14:04 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:41:35 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ setbuf(stdout, NULL);
 	{
 		int x = 0;
 		fd = open(av[1], O_RDONLY);
-		while (x < 11) {
+		while (x < 42) {
+			//printf("ITERATION NUMBER %i\n", x + 1);
 			line = get_next_line(fd);
 			if (!line)
 				break;
-			printf("%s\n", line);
+			printf("LINE IS : %s\n", line);
 			x++;
 			free(line);
 		}
