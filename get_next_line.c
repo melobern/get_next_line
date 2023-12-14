@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/13 18:38:15 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/14 20:15:19 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@ static int	ft_contains_end_line(char *str)
 	x = 0;
 	while (str && str[x])
 	{
-	//	write(1, &str[x], 1);
 		if (str[x] == '\n')
 			return (x);
 		x++;
 	}
 	return (0);
+}
+
+char	*ft_fill_buff(char *buf)
+{
+	int	x;
+
+	x = 0;
+	while (x < BUFFER_SIZE + 1)
+		buf[x++] = '\0';
+	return (buf);
 }
 
 char	*ft_all(int fd, char *buf, char *stash)
@@ -36,30 +45,22 @@ char	*ft_all(int fd, char *buf, char *stash)
 	if (fd && buf)
 	{
 		if (stash)
-			all = ft_strjoin(all, stash, ft_strlen(stash));
-		bytesRead = read(fd, buf, BUFFER_SIZE);
-		if (bytesRead < 0)
-			return (NULL);
-		buf[BUFFER_SIZE + 1] = '\0';
-		while (bytesRead > 0 && ft_contains_end_line(buf) == 0)
+			all = ft_strnjoin(all, stash, ft_strlen(stash));
+		bytesRead = 1;
+		while (bytesRead > 0)
 		{
-			/*
-		ft_putendl("\nft_contains_end_line(buf)");
-		printf("\n The FREAKING BUF :\t%i\n", ft_contains_end_line(buf));
-		ft_putendl("\nBUFFER");
-			
-			*/
-			all = ft_strjoin(all, buf, BUFFER_SIZE);
 			bytesRead = read(fd, buf, BUFFER_SIZE);
+			if (bytesRead < 0)
+				return (NULL);
+	//		printf("BYTESREAD\t=\t%i\n", bytesRead);
 			if (bytesRead > 0)
 			{
-				buf[BUFFER_SIZE] = '\n';
-				buf[BUFFER_SIZE + 1] = '\0';// PROBS TO COME
+				all = ft_strnjoin(all, buf, BUFFER_SIZE);
+				buf[bytesRead] = '\0';
 			}
+			if(ft_contains_end_line(buf) != 0)
+				break ;
 		}
-		if (bytesRead > 0)
-			all = ft_strjoin(all, buf, BUFFER_SIZE);
-	//	ft_putendl(buf);
 	}
 	return (all);
 }
@@ -72,8 +73,9 @@ char	*ft_line(char *all)
 	line = NULL;
 	if (all)
 	{
-		size = ft_contains_end_line(all) + 1;
-		line = ft_strjoin(line, all, size);
+		size = ft_contains_end_line(all);
+//		printf("SIZE OF LINE\t===\t%i\n", size);
+		line = ft_strnjoin(line, all, size);
 		return (line);
 	}
 	return (NULL);
@@ -87,17 +89,14 @@ char	*get_next_line(int fd)
 	char		*all;
 	size_t		rest;
 
-	buf[0] = '\0';
-	if (BUFFER_SIZE <= 0 || fd <= 0 || read(fd, buf, 0) < 0)
+	ft_fill_buff(buf);
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, buf, 0) < 0)
 		return (NULL);
 	all = ft_all(fd, buf, stash);
 	line = ft_line(all);
-	free(all);
 	rest = ft_contains_end_line(buf) + 1;
+	free(all);
 	if (rest > 0 && buf[rest])
-	{
 		ft_strlcpy(stash, buf + rest, BUFFER_SIZE);
-		//ft_putendl(stash);
-	}
 	return (line);
 }
