@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   my_utils_not_to_push.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 13:22:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/15 17:54:15 by mbernard         ###   ########.fr       */
+/*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
+/*   Updated: 2023/12/15 18:04:11 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
 
-int	main(int ac, char **av)
+void	ft_putchar(char c)
 {
-	int	fd;
-	char	*line;
+	write(1, &c, 1);
+}
 
-setbuf(stdout, NULL);
-	if (ac > 1)
+void	ft_putstr(char *s)
+{
+	int	len;
+
+	len = 0;
+	while (s[len])
 	{
-		int x = 0;
-		fd = open(av[1], O_RDONLY);
-		while (x < 35) {
-			//printf("ITERATION NUMBER %i\n", x + 1);
-			line = get_next_line(fd);
-			if (!line)
-				break;
-			dprintf(2, "LINE : %s\n", line);
-			x++;
-			free(line);
-		}
-		close(fd);
+		write(1, &(s[len]), 1);
+		len++;
 	}
-	return (0);
+}
+
+void	ft_putendl(char *s)
+{
+	if (s)
+		ft_putstr(s);
+	write(1, "\n", 1);
 }

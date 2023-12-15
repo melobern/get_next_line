@@ -6,18 +6,18 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:41:27 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/14 16:02:36 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:09:25 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <stdio.h> // RO REMOVE
+#include <stdio.h> // TO REMOVE
 # include <stdlib.h>
 # include <unistd.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 11
+#  define BUFFER_SIZE 1000
 # endif
 char	*get_next_line(int fd);
 char	*ft_strnjoin(char *s1, char *s2, size_t size);
@@ -25,6 +25,7 @@ size_t	ft_strlen(char *s);
 size_t	ft_strlcpy(char *dest, char *src, size_t size);
 
 // TO DELETE //
+void	ft_putchar(char c);
 void	ft_putstr(char *s);
 void	ft_putendl(char *s);
 

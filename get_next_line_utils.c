@@ -6,29 +6,11 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/14 16:02:36 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:04:41 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	ft_putstr(char *s)
-{
-	int	len;
-
-	len = 0;
-	while (s[len])
-	{
-		write(1, &(s[len]), 1);
-		len++;
-	}
-}
-
-void	ft_putendl(char *s)
-{
-	ft_putstr(s);
-	write(1, "\n", 1);
-}
 
 size_t	ft_strlen(char *s)
 {
@@ -47,7 +29,7 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 {
 	size_t	total_len;
 	char	*dest;
-	int		x;
+	size_t	x;
 	size_t	y;
 
 	if (!s2)
