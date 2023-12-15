@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/14 20:15:19 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:59:45 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_contains_end_line(char *str)
 	return (0);
 }
 
-char	*ft_fill_buff(char *buf)
+static char	*ft_fill_zero(char *buf)
 {
 	int	x;
 
@@ -36,36 +36,32 @@ char	*ft_fill_buff(char *buf)
 	return (buf);
 }
 
-char	*ft_all(int fd, char *buf, char *stash)
+static char	*ft_all(int fd, char *buf, char *stash)
 {
-	char	*all;
-	int		bytesRead;
+	char		*all;
+	long int	bytesRead;
 
 	all = NULL;
-	if (fd && buf)
+	all = ft_strnjoin(all, stash, ft_strlen(stash));
+	if (ft_contains_end_line(all) || all[0] == '\n')
+		return (all);
+	bytesRead = read(fd, buf, BUFFER_SIZE);
+	if (bytesRead <= 0)
+		return (free(all), NULL);
+	while (bytesRead > 0)
 	{
-		if (stash)
-			all = ft_strnjoin(all, stash, ft_strlen(stash));
-		bytesRead = 1;
-		while (bytesRead > 0)
-		{
-			bytesRead = read(fd, buf, BUFFER_SIZE);
-			if (bytesRead < 0)
-				return (NULL);
-	//		printf("BYTESREAD\t=\t%i\n", bytesRead);
-			if (bytesRead > 0)
-			{
-				all = ft_strnjoin(all, buf, BUFFER_SIZE);
-				buf[bytesRead] = '\0';
-			}
-			if(ft_contains_end_line(buf) != 0)
-				break ;
-		}
+		buf[bytesRead] = '\0';
+		all = ft_strnjoin(all, buf, bytesRead);
+		if (ft_contains_end_line(all) != 0 || all[0] == '\n')
+			break ;
+		bytesRead = read(fd, buf, BUFFER_SIZE);
+		if (bytesRead < 0)
+			return (NULL);
 	}
 	return (all);
 }
 
-char	*ft_line(char *all)
+static char	*ft_line(char *all)
 {
 	char	*line;
 	size_t	size;
@@ -74,8 +70,7 @@ char	*ft_line(char *all)
 	if (all)
 	{
 		size = ft_contains_end_line(all);
-//		printf("SIZE OF LINE\t===\t%i\n", size);
-		line = ft_strnjoin(line, all, size);
+		line = ft_strnjoin(line, all, size + 1);
 		return (line);
 	}
 	return (NULL);
@@ -83,20 +78,37 @@ char	*ft_line(char *all)
 
 char	*get_next_line(int fd)
 {
-	static char	stash[BUFFER_SIZE + 1] = "";
+	static char	stash[BUFFER_SIZE + 1];
 	char		buf[BUFFER_SIZE + 1];
 	char		*line;
 	char		*all;
 	size_t		rest;
 
-	ft_fill_buff(buf);
+	ft_fill_zero(buf);
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, buf, 0) < 0)
 		return (NULL);
 	all = ft_all(fd, buf, stash);
+	if (all == NULL)
+	{
+		ft_fill_zero(stash);
+		return (NULL);
+	}
+	if (ft_contains_end_line(all) == 0 && all[0] != '\n')
+		return (all);
+	// ft_putendl("ALL");
+	//	ft_putendl(all);
 	line = ft_line(all);
 	rest = ft_contains_end_line(buf) + 1;
 	free(all);
 	if (rest > 0 && buf[rest])
+	{
 		ft_strlcpy(stash, buf + rest, BUFFER_SIZE);
+//		ft_putendl("STASH BEGIN");
+	//	ft_putendl(stash);
+//		ft_putendl("STASH END");
+	}
+	else
+		ft_fill_zero(stash);
 	return (line);
 }
+
