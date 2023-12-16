@@ -6,13 +6,13 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/15 18:04:41 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/16 09:50:21 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
@@ -23,6 +23,46 @@ size_t	ft_strlen(char *s)
 			len++;
 	}
 	return (len);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void			*copy;
+	unsigned char	*ptr;
+	size_t			count;
+
+	if (nmemb && size && ((nmemb * size) / nmemb != size))
+		return (NULL);
+	size = nmemb * size;
+	count = 0;
+	copy = (void *)malloc(size);
+	if (!(copy))
+		return (NULL);
+	ptr = (unsigned char *)copy;
+	while (count < size)
+	{
+		ptr[count] = (unsigned char)0;
+		count++;
+	}
+	return (ptr);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*copy;
+	int		count;
+
+	copy = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!(copy))
+		return (NULL);
+	count = 0;
+	while (s && s[count])
+	{
+		copy[count] = s[count];
+		count++;
+	}
+	copy[count] = '\0';
+	return (copy);
 }
 
 char	*ft_strnjoin(char *s1, char *s2, size_t size)
