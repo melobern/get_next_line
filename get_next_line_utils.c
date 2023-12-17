@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/16 09:50:21 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:44:04 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 	if (!s2)
 		return (NULL);
 	total_len = ft_strlen(s1) + size;
-	dest = (char *)malloc(sizeof(char) * (total_len + 1));
+	dest = (char *)calloc(total_len + 1, sizeof(char));
+//	dest = (char *)malloc(sizeof(char) * (total_len + 1));
 	if (!dest)
 		return (NULL);
 	x = 0;
@@ -85,10 +86,11 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 		dest[x] = (char)s1[x];
 		x++;
 	}
-	free(s1);
 	while (s2[y] && y < size)
 		dest[x++] = (char)s2[y++];
 	dest[x] = '\0';
+//	if (s1)
+//		free(s1);
 	return (dest);
 }
 
