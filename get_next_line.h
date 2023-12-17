@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:41:27 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/16 09:52:02 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:41:31 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 1
 # endif
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
