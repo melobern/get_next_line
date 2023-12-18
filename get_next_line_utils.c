@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/17 15:44:04 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:21:01 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,6 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-char	*ft_strdup(const char *s)
-{
-	char	*copy;
-	int		count;
-
-	copy = ft_calloc(ft_strlen(s) + 1, sizeof(char));
-	if (!(copy))
-		return (NULL);
-	count = 0;
-	while (s && s[count])
-	{
-		copy[count] = s[count];
-		count++;
-	}
-	copy[count] = '\0';
-	return (copy);
-}
-
 char	*ft_strnjoin(char *s1, char *s2, size_t size)
 {
 	size_t	total_len;
@@ -72,11 +54,10 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 	size_t	x;
 	size_t	y;
 
-	if (!s2)
+	if (!s1 || !s2)
 		return (NULL);
 	total_len = ft_strlen(s1) + size;
 	dest = (char *)calloc(total_len + 1, sizeof(char));
-//	dest = (char *)malloc(sizeof(char) * (total_len + 1));
 	if (!dest)
 		return (NULL);
 	x = 0;
@@ -86,11 +67,10 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 		dest[x] = (char)s1[x];
 		x++;
 	}
+	free(s1);
 	while (s2[y] && y < size)
 		dest[x++] = (char)s2[y++];
 	dest[x] = '\0';
-//	if (s1)
-//		free(s1);
 	return (dest);
 }
 

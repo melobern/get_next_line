@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/17 15:43:34 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:08:59 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,40 +36,47 @@ static char	*ft_fill_zero(char *str)
 	return (str);
 }
 
-static char	*ft_read(int fd, char *stash)
+static char	*ft_read(int fd, char *stash, char *line)
 {
-	char		*line;
-	long int	bytesRead;
+	long int	bytes_read;
 
+	line = ft_calloc(1, 1);
+	if (stash[0])
+		line = ft_strnjoin(line, stash, BUFFER_SIZE);
 	if (stash[0] && ft_contains_end_line(stash) != -1)
-		return (stash);
-	bytesRead = read(fd, stash, BUFFER_SIZE);
-	if (bytesRead <= 0)
-		return (NULL);
-	while (bytesRead > 0)
+		return (line); 
+	bytes_read = read(fd, stash, BUFFER_SIZE);
+	if (bytes_read <= 0 && ft_strlen(line) < 1)
+		return (free(line), NULL);
+	while (bytes_read > 0)
 	{
-		stash[bytesRead] = '\0';
-		line = ft_strnjoin(line, stash, bytesRead);
-		if (ft_contains_end_line(line) != -1)
+		stash[bytes_read] = '\0';
+		if (ft_contains_end_line(stash) != -1)
 			break ;
-		bytesRead = read(fd, stash, BUFFER_SIZE);
-		if (bytesRead < 0)
-			return (NULL);
+		line = ft_strnjoin(line, stash, bytes_read);
+		bytes_read = read(fd, stash, BUFFER_SIZE);
+		if (bytes_read < 0)
+			return (free(line), NULL);
 	}
-	ft_putendl(line);
 	return (line);
 }
 
-static char	*ft_line(char *stash)
+static char	*ft_line(char *stash, char *line)
 {
-	char	*line;
-	size_t	size;
+	int	size;
+	int	len;
 
-	line = NULL;
+	len = ft_contains_end_line(line);
 	if (stash)
 	{
-		size = ft_contains_end_line(stash);
-		line = ft_strnjoin(line, stash, size + 1);
+		size = ft_contains_end_line(stash) + 1;
+		if (len != -1)
+		{
+			while (line[++len])
+				line[len] = '\0';
+		}
+		else
+			line = ft_strnjoin(line, stash, size);
 		return (line);
 	}
 	return (NULL);
@@ -83,12 +90,13 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, stash, 0) < 0)
 		return (NULL);
-	line = ft_read(fd, stash);
+	line = NULL;
+	line = ft_read(fd, stash, line);
 	if (line == NULL)
 		return (NULL);
-	line = ft_line(stash);
+	line = ft_line(stash, line);
 	rest = ft_contains_end_line(stash) + 1;
-	if (rest > 0 && stash[rest])
+	if (rest > 0 && stash[rest - 1])
 		ft_strlcpy(stash, stash + rest, BUFFER_SIZE);
 	else
 		ft_fill_zero(stash);
