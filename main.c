@@ -33,10 +33,8 @@ int	main(int ac, char **av)
 			printf("\033[0;32m");
 			printf("LINE %s", line);
 			printf("\033[0m");
-			x++;
 			free(line);
 		}
-		line = get_next_line(fd);
 		close(fd);
 	}
 	return (0);
