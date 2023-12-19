@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/18 16:08:59 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:39:54 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ static char	*ft_read(int fd, char *stash, char *line)
 	long int	bytes_read;
 
 	line = ft_calloc(1, 1);
+	if (!line)
+		return (NULL);
 	if (stash[0])
 		line = ft_strnjoin(line, stash, BUFFER_SIZE);
 	if (stash[0] && ft_contains_end_line(stash) != -1)
-		return (line); 
+		return (line);
 	bytes_read = read(fd, stash, BUFFER_SIZE);
 	if (bytes_read <= 0 && ft_strlen(line) < 1)
 		return (free(line), NULL);
