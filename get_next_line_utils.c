@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/18 16:17:44 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:11:04 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	if (s)
-	{
-		while (s[len])
-			len++;
-	}
+	while (s[len])
+		len++;
 	return (len);
 }
 
@@ -54,12 +51,14 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 	size_t	x;
 	size_t	y;
 
-	if (!s1 || !s2)
+	if (!s1)
 		return (NULL);
+	if (!s2)
+		return (free(s1), NULL);
 	total_len = ft_strlen(s1) + size;
 	dest = (char *)calloc(total_len + 1, sizeof(char));
 	if (!dest)
-		return (NULL);
+		return (free(s1), NULL);
 	x = 0;
 	y = 0;
 	while (s1 && s1[x])
@@ -67,11 +66,10 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 		dest[x] = (char)s1[x];
 		x++;
 	}
-	free(s1);
 	while (s2[y] && y < size)
 		dest[x++] = (char)s2[y++];
 	dest[x] = '\0';
-	return (dest);
+	return (free(s1), dest);
 }
 
 size_t	ft_strlcpy(char *dest, char *src, size_t size)
