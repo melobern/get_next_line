@@ -6,7 +6,7 @@
 /*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:41:27 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/18 11:15:02 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:09:22 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2
 # endif
+
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *s);
