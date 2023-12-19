@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/18 16:39:54 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:10:58 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static char	*ft_read(int fd, char *stash, char *line)
 {
 	long int	bytes_read;
 
-	line = ft_calloc(1, 1);
 	if (!line)
 		return (NULL);
 	if (stash[0])
@@ -68,9 +67,9 @@ static char	*ft_line(char *stash, char *line)
 	int	size;
 	int	len;
 
-	len = ft_contains_end_line(line);
-	if (stash)
+	if (line)
 	{
+		len = ft_contains_end_line(line);
 		size = ft_contains_end_line(stash) + 1;
 		if (len != -1)
 		{
@@ -92,11 +91,14 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, stash, 0) < 0)
 		return (NULL);
-	line = NULL;
+	line = ft_calloc(1, 1);
 	line = ft_read(fd, stash, line);
-	if (line == NULL)
-		return (NULL);
 	line = ft_line(stash, line);
+	if (line == NULL)
+	{
+		ft_fill_zero(stash);
+		return (NULL);
+	}
 	rest = ft_contains_end_line(stash) + 1;
 	if (rest > 0 && stash[rest - 1])
 		ft_strlcpy(stash, stash + rest, BUFFER_SIZE);

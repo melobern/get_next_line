@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbernard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:22:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/18 16:55:20 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:11:28 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ int	main(int ac, char **av)
 			free(line);
 		}
 		line = get_next_line(fd);
-
-			line = get_next_line(fd);
-			line = get_next_line(fd);
-			line = get_next_line(fd);
-			line = get_next_line(fd);
 		close(fd);
 	}
 	return (0);
