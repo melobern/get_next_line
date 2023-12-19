@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/19 15:10:58 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:44:35 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,27 +67,27 @@ static char	*ft_line(char *stash, char *line)
 	int	size;
 	int	len;
 
-	if (line)
+	if (!line)
+		return (NULL);
+	len = ft_contains_end_line(line);
+	if (len != -1)
 	{
-		len = ft_contains_end_line(line);
-		size = ft_contains_end_line(stash) + 1;
-		if (len != -1)
-		{
-			while (line[++len])
-				line[len] = '\0';
-		}
-		else
-			line = ft_strnjoin(line, stash, size);
-		return (line);
+		while (line[++len])
+			line[len] = '\0';
 	}
-	return (NULL);
+	else
+	{
+		size = ft_contains_end_line(stash) + 1;
+		line = ft_strnjoin(line, stash, size);
+	}
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	stash[BUFFER_SIZE + 1];
 	char		*line;
-	size_t		rest;
+	int			rest;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, stash, 0) < 0)
 		return (NULL);
@@ -101,7 +101,7 @@ char	*get_next_line(int fd)
 	}
 	rest = ft_contains_end_line(stash) + 1;
 	if (rest > 0 && stash[rest - 1])
-		ft_strlcpy(stash, stash + rest, BUFFER_SIZE);
+		ft_strncpy(stash, stash + rest, BUFFER_SIZE);
 	else
 		ft_fill_zero(stash);
 	return (line);

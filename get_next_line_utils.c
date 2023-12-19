@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/19 15:11:04 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:44:37 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 	return (free(s1), dest);
 }
 
-size_t	ft_strlcpy(char *dest, char *src, size_t size)
+size_t	ft_strncpy(char *dest, char *src, size_t size)
 {
 	size_t	src_size;
 
@@ -86,7 +86,7 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 		}
 		dest[src_size] = '\0';
 	}
-	while (src[src_size])
-		src_size++;
+	while (++src_size < size)
+		dest[src_size] = '\0';
 	return (src_size);
 }
