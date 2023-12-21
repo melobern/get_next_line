@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/19 16:44:35 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:11:16 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_next_line(int fd)
 	int			rest;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, stash, 0) < 0)
-		return (NULL);
+		return (ft_fill_zero(stash), NULL);
 	line = ft_calloc(1, 1);
 	line = ft_read(fd, stash, line);
 	line = ft_line(stash, line);
