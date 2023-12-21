@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:41:27 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/21 14:17:34 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/21 20:04:29 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
-char	*ft_strdup(const char *s);
 char	*ft_strnjoin(char *s1, char *s2, size_t size);
 size_t	ft_strlen(const char *s);
 size_t	ft_strncpy(char *dest, char *src, size_t size);
