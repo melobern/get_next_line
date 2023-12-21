@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:47:13 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/21 13:53:55 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/21 20:09:27 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strnjoin(char *s1, char *s2, size_t size)
 	if (!s2)
 		return (free(s1), NULL);
 	total_len = ft_strlen(s1) + size;
-	dest = (char *)ft_calloc(total_len + 1, sizeof(char));
+	dest = (char *)malloc((total_len + 1) * sizeof(char));
 	if (!dest)
 		return (free(s1), NULL);
 	x = 0;
@@ -86,7 +86,5 @@ size_t	ft_strncpy(char *dest, char *src, size_t size)
 		}
 		dest[src_size] = '\0';
 	}
-	while (++src_size < size)
-		dest[src_size] = '\0';
 	return (src_size);
 }
