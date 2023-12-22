@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:22:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/22 13:58:56 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:12:15 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 void	one_fd_test(int ac, char **av)
 {
 	char	*line;
-	int		x;
 	int		fd;
 
 	fd = open(av[1], O_RDONLY);
