@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/22 14:06:13 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:26:28 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,7 @@ static int	ft_contains_end_line(char *str)
 
 void	ft_clear_stash(char (*stash)[BUFFER_SIZE + 1], int fd)
 {
-	if (fd < 0)
-	{
-		fd = 0;
-		while (fd < 1024)
-		{
-			stash[fd][0] = '\0';
-			fd++;
-		}
-	}
-	else
+	if (fd > 0)
 		stash[fd][0] = '\0';
 }
 
