@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/21 20:16:12 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/23 09:30:59 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*ft_read(int fd, char *stash, char *line)
 	long int	bytes_read;
 
 	if (stash[0])
-		line = ft_strnjoin(line, stash, ft_strlen(stash));
+		line = ft_strnjoin(line, stash, BUFFER_SIZE);
 	if (line == NULL)
 		return (NULL);
 	if (stash[0] && ft_contains_end_line(stash) != -1)
