@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/23 09:30:59 by mbernard         ###   ########.fr       */
+/*   Updated: 2023/12/25 10:17:32 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*ft_line(char *stash, char *line)
 		new = ft_strnjoin(new, line, len + 1);
 		return (free(line), new);
 	}
-	else
+	else if (stash[0])
 	{
 		size = ft_contains_end_line(stash) + 1;
 		line = ft_strnjoin(line, stash, size);
