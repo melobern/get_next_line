@@ -6,7 +6,7 @@
 /*   By: mbernard <mbernard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 13:45:35 by mbernard          #+#    #+#             */
-/*   Updated: 2023/12/25 10:18:13 by mbernard         ###   ########.fr       */
+/*   Updated: 2024/01/02 08:19:38 by mbernard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ static int	ft_contains_end_line(char *str)
 		x++;
 	}
 	return (-1);
-}
-
-void	ft_clear_stash(char (*stash)[BUFFER_SIZE + 1], int fd)
-{
-	if (fd > 0)
-		stash[fd][0] = '\0';
 }
 
 static char	*ft_read(int fd, char *stash, char *line)
@@ -91,7 +85,8 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, stash, 0) < 0)
 	{
-		ft_clear_stash(stash, fd);
+		if (fd > 0)
+			stash[fd][0] = '\0';
 		return (NULL);
 	}
 	line = ft_calloc(1, 1);
@@ -99,13 +94,13 @@ char	*get_next_line(int fd)
 	line = ft_line(stash[fd], line);
 	if (line == NULL)
 	{
-		ft_clear_stash(stash, fd);
+		stash[fd][0] = '\0';
 		return (NULL);
 	}
 	rest = ft_contains_end_line(stash[fd]) + 1;
 	if (rest > 0 && stash[fd][rest - 1])
 		ft_strncpy(stash[fd], stash[fd] + rest, BUFFER_SIZE);
 	else
-		ft_clear_stash(stash, fd);
+		stash[fd][0] = '\0';
 	return (line);
 }
